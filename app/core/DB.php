@@ -1,10 +1,10 @@
 <?php
 
 class ConnectDB {
-
-    private static $server = 'LAPTOP-B7Q5H0D0';
-    private static $database = '68PM34';
-
+    private static $host = 'localhost';
+    private static $db_name = '68PM34';
+    private static $username = 'root';
+    private static $password = '5555';
     public static $conn;
 
     public static function connect() {
@@ -14,7 +14,9 @@ class ConnectDB {
         try {
 
             $conn = new PDO(
-                "sqlsrv:Server=" . self::$server . ";Database=" . self::$database . ";Trusted_Connection=yes;"
+                'mysql:host=' . self::$host . ';dbname=' . self::$db_name,
+                self::$username,
+                self::$password
             );
 
             $conn->setAttribute(
