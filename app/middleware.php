@@ -14,7 +14,7 @@ class middleware
 
 
 
-        if (!isset($_SESSION['username']) && !in_array($_SERVER['REQUEST_URI'], $publicPages)) {
+      //  if (!isset($_SESSION['username']) && !in_array($_SERVER['REQUEST_URI'], $publicPages)) {
 
             header('Location: /home/login');
 

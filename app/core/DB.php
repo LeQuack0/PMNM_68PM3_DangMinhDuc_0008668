@@ -2,10 +2,10 @@
 
 class ConnectDB {
     private static $host = '127.0.0.1';
-    private static $port = '3307';
+    private static $port = '3306';
     private static $db_name = '68pm34';
     private static $username = 'root';
-    private static $password = '';
+    private static $password = '123456';
     public static $conn;
 
     public static function connect() {

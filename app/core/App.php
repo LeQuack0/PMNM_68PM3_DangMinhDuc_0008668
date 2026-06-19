@@ -1,7 +1,7 @@
 <?php
 class App
 {
-  protected $controller = "home";
+  protected $controller = "lophocController";
   protected $action = "index";
   protected $param = [];
 

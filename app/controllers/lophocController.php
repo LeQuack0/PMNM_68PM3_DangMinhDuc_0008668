@@ -2,23 +2,9 @@
 
 require_once '../app/core/controller.php';
 
-class lophoc extends Controller
+class lophocController extends Controller
 {
-    public function index()
-    {
-        $search = $_GET['search'] ?? '';
-
-        $model = $this->model('lophocModel');
-
-        $this->view(
-            'layout/masterlayout',
-            [
-                'viewname'=>'lophoc/index',
-                'lophocs'=>$model->getAll($search)
-            ]
-        );
-    }
-
+   
     public function create()
     {
         $this->view('lophoc/create');
