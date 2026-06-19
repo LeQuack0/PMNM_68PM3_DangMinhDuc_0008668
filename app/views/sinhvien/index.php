@@ -4,111 +4,183 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title; ?></title>
-    
+    <title><?= $title ?? 'Danh sách sinh viên' ?></title>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Segoe UI', Tahoma;
+            background: linear-gradient(135deg,#f5f7fa,#c3cfe2);
             padding: 30px;
-            min-height: 100vh;
         }
 
         h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-align:center;
+            margin-bottom:20px;
+            color:#2c3e50;
         }
 
         table {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            width:100%;
+            max-width:1200px;
+            margin:auto;
+            border-collapse:collapse;
+            background:#fff;
+            border-radius:12px;
+            overflow:hidden;
         }
 
         th {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 18px 15px;
-            text-align: left;
-            font-weight: 600;
-            font-size: 1.05rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            background:#3498db;
+            color:#fff;
+            padding:12px;
         }
 
         td {
-            padding: 16px 15px;
-            border-bottom: 1px solid #eee;
-            color: #333;
+            padding:12px;
+            border-bottom:1px solid #eee;
         }
 
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
+        tr:nth-child(even){ background:#f8f9fa; }
+
+        .btn {
+            padding:6px 10px;
+            border-radius:6px;
+            color:white;
+            text-decoration:none;
+            font-size:13px;
         }
 
-        tr:hover {
-            background-color: #e8f4fd;
-            transform: scale(1.01);
-            transition: all 0.3s ease;
+        .edit { background:#f39c12; }
+        .delete { background:#e74c3c; }
+
+        .pagination {
+            text-align:center;
+            margin-top:20px;
         }
 
-        tr:last-child td {
-            border-bottom: none;
+        .pagination a {
+            padding:8px 12px;
+            margin:2px;
+            text-decoration:none;
+            background:#ddd;
+            border-radius:5px;
+            color:black;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            body {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 2rem;
-            }
-            th, td {
-                padding: 12px 8px;
-                font-size: 0.95rem;
-            }
+        .pagination a.active {
+            background:red;
+            color:white;
+        }
+
+        input {
+            padding:6px;
         }
     </style>
 </head>
+
 <body>
-    <h1>Danh sách sinh viên</h1>
-    <table>
-    <tr>
-        <th> STT </th>
-        <th> Mã sinh viên </th>
-        <th> Họ tên </th>
-        <th> Giới tính </th>
-        <th> Ngày sinh </th>
-        <th> Địa chỉ </th>
-        <th> Lớp </th>
-    </tr>
-    <?php foreach ($sinhviens as $index => $sinhvien): ?>
-        <tr>
-            <td> <?php echo $index + 1; ?> </td>
-            <td> <?php echo $sinhvien['ma_sv']; ?> </td>
-            <td> <?php echo $sinhvien['ho_ten']; ?> </td>
-            <td> <?php echo $sinhvien['gioi_tinh']; ?> </td>
-            <td> <?php echo $sinhvien['ngay_sinh']; ?> </td>
-            <td> <?php echo $sinhvien['dia_chi']; ?> </td>
-            <td> <?php echo $sinhvien['lop']; ?> </td>
-        </tr>
-    <?php endforeach; ?>
-    </table>
-    
+
+<h1>Danh sách sinh viên</h1>
+
+<table>
+<thead>
+<tr>
+    <th>STT</th>
+    <th>Mã SV</th>
+    <th>Họ tên</th>
+    <th>Giới tính</th>
+    <th>Ngày sinh</th>
+    <th>Địa chỉ</th>
+    <th>Lớp</th>
+    <th>Thao tác</th>
+</tr>
+</thead>
+
+<tbody>
+
+<?php foreach ($sinhviens as $index => $sv): ?>
+<tr>
+
+    <td><?= ($currentPage - 1) * 5 + $index + 1 ?></td>
+
+    <td><?= htmlspecialchars($sv['ma_sv']) ?></td>
+    <td><?= htmlspecialchars($sv['ho_ten']) ?></td>
+    <td><?= htmlspecialchars($sv['gioi_tinh']) ?></td>
+    <td><?= htmlspecialchars($sv['ngay_sinh']) ?></td>
+    <td><?= htmlspecialchars($sv['dia_chi']) ?></td>
+    <td><?= htmlspecialchars($sv['lop']) ?></td>
+
+    <td>
+        <a class="btn edit"
+           href="/sinhvien/index?page=<?= $currentPage ?>&edit=<?= $sv['id'] ?>">
+            Sửa
+        </a>
+
+        <a class="btn delete"
+           href="/sinhvien/delete/<?= $sv['id'] ?>"
+           onclick="return confirm('Xóa sinh viên?')">
+            Xóa
+        </a>
+    </td>
+</tr>
+
+<!-- INLINE EDIT -->
+<?php if (isset($_GET['edit']) && $_GET['edit'] == $sv['id']): ?>
+<tr>
+<td colspan="8">
+
+<form method="post"
+      action="/sinhvien/update/<?= $sv['id'] ?>"
+      style="display:flex; gap:10px; flex-wrap:wrap;">
+
+    <input name="ma_sv" value="<?= $sv['ma_sv'] ?>" required>
+    <input name="ho_ten" value="<?= $sv['ho_ten'] ?>" required>
+    <input name="gioi_tinh" value="<?= $sv['gioi_tinh'] ?>" required>
+    <input type="date" name="ngay_sinh" value="<?= $sv['ngay_sinh'] ?>" required>
+    <input name="dia_chi" value="<?= $sv['dia_chi'] ?>">
+    <input name="lop" value="<?= $sv['lop'] ?>" required>
+
+    <button type="submit" style="background:#2ecc71;color:white;padding:6px 10px;border:none;">
+        Lưu
+    </button>
+
+    <a href="/sinhvien/index?page=<?= $currentPage ?>"
+       style="background:#95a5a6;color:white;padding:6px 10px;text-decoration:none;">
+        Hủy
+    </a>
+
+</form>
+
+</td>
+</tr>
+<?php endif; ?>
+
+<?php endforeach; ?>
+
+</tbody>
+</table>
+
+<!-- PAGINATION -->
+<div class="pagination">
+
+<?php if ($currentPage > 1): ?>
+    <a href="/sinhvien/index?page=<?= $currentPage - 1 ?>">⬅</a>
+<?php endif; ?>
+
+<?php for ($i = 1; $i <= $totalPages; $i++): ?>
+    <a class="<?= ($i == $currentPage) ? 'active' : '' ?>"
+       href="/sinhvien/index?page=<?= $i ?>">
+        <?= $i ?>
+    </a>
+<?php endfor; ?>
+
+<?php if ($currentPage < $totalPages): ?>
+    <a href="/sinhvien/index?page=<?= $currentPage + 1 ?>">➡</a>
+<?php endif; ?>
+
+</div>
+
 </body>
 </html>

@@ -1,24 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title; ?></title>
-<style>
-    .footer{
-        width: 100%;
-        height: 50px;
-        background-color: #333;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-</style>
+<footer class="footer">
+    <div class="footer-container">
 
-<div class="footer">
-    <p>by Trieu Huong Giang đây là footer</p>
-</div>
+        <div class="footer-left">
+            <h3>🎓 Hệ Thống Quản Lý Sinh Viên</h3>
+            <p>Ứng dụng quản lý sinh viên xây dựng theo mô hình MVC.</p>
+        </div>
 
-</body>
-</html>
+        <div class="footer-center">
+            <p><strong>Sinh viên thực hiện:</strong></p>
+            <p>Triệu Hương Giang</p>
+            <p>Lớp: 68PM3</p>
+        </div>
+
+        <div class="footer-right">
+            <p>&copy; <?= date('Y') ?> All Rights Reserved.</p>
+            <p>Đại học Xây dựng Hà Nội</p>
+        </div>
+
+    </div>
+</footer>
